@@ -24,32 +24,15 @@ public void run(){
        //SAVES USERID (UID RANDOM NUM BETWEEN 1 AND 8000000
         userData = in.readLine();
         System.out.println("Reading in userData " + userData);
-    
-        
-        // String[] userDataArray = userData.split("\\|");
-        
-        // userID = userDataArray[0];
-        // userName = userDataArray[1].replaceAll("\\s+","");
-        
-        // if(!JokeServer.clientMap.containsKey(userID)){
-            
-        //     ArrayList<ArrayList<String>> contentArray = new ArrayList<ArrayList<String>>();
-        //     ArrayList<String> jokeArray = new ArrayList<String>();
-        //     ArrayList<String> proverbArray = new ArrayList<String>();
-
-        //     contentArray.add(jokeArray);
-        //     contentArray.add(proverbArray);
-        //     JokeServer.clientMap.put(userID, contentArray);
-        // }
-        //sendDirs(userData, out);
+        System.out.println("Here is the current directory: ");
+        ReadFiles fileReader = new ReadFiles();
+        fileReader.printDir();
 
         sock.close();
     } catch (Exception x){x.printStackTrace();}
    
 }
 }
-
-
   
 public class MyWebServer {
 
@@ -69,6 +52,26 @@ public class MyWebServer {
        }
     }
 }
+
+class ReadFiles {
+  public static void main (String[] args ) {}
+
+    
+  public void printDir(){
+    String filedir ;
+    File f1 = new File ( "C:\\Users\\jberr\\Desktop\\WebServer" ) ;
+    
+    File[] strFilesDirs = f1.listFiles ( );
+    for ( int i = 0 ; i < strFilesDirs.length ; i ++ ) {
+      if ( strFilesDirs[i].isDirectory ( ) ) 
+    System.out.println ( "Directory: " + strFilesDirs[i] ) ;
+      else if ( strFilesDirs[i].isFile ( ) )
+    System.out.println ( "File: " + strFilesDirs[i] + 
+           " (" + strFilesDirs[i].length ( ) + ")" ) ;
+    }
+  }
+}
+
 
 
 
