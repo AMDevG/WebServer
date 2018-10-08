@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
-//import java.util.ArrayList;
-//import java.util.HashMap;
+import java.util.ArrayList;
+
 
 class Worker extends Thread{
     Socket sock;
@@ -11,8 +11,6 @@ public void run(){
 
     PrintStream out = null;
     BufferedReader in = null;
-    // String userName;
-    // String userID;
     String userData;
     
     try{
@@ -20,18 +18,25 @@ public void run(){
         out = new PrintStream(sock.getOutputStream());
         }catch(IOException ioe){System.out.println(ioe);}
    try{
-       //READS IN CLIENT UID AND USERNAME, SPLITS AROUND CHARACTER"|"
-       //SAVES USERID (UID RANDOM NUM BETWEEN 1 AND 8000000
-        userData = in.readLine();
-        System.out.println("Reading in userData " + userData);
-        System.out.println("Here is the current directory: ");
-        ReadFiles fileReader = new ReadFiles();
-        fileReader.printDir();
-
+        out.println(createHTML());
         sock.close();
     } catch (Exception x){x.printStackTrace();}
    
 }
+
+public String createHTML(){
+  String htmlToReturn = "<html>";
+  ReadFiles fileReader = new ReadFiles();
+  ArrayList<File> files = fileReader.printDir();
+
+  for(File f : files){
+    htmlToReturn  = htmlToReturn + "<a href='"+f+"'>"+f+"</a>"+"<br>" + "\n";
+  }
+
+  htmlToReturn = htmlToReturn + "</html>";
+  return htmlToReturn;
+}
+
 }
   
 public class MyWebServer {
@@ -39,7 +44,7 @@ public class MyWebServer {
     public static void main(String[] args) throws IOException {
 
        int q_len = 6;
-       int port = 80;
+       int port = 2540;
        Socket sock;
        
        ServerSocket servsock = new ServerSocket(port, q_len);
@@ -57,18 +62,23 @@ class ReadFiles {
   public static void main (String[] args ) {}
 
     
-  public void printDir(){
+  public ArrayList<File> printDir(){
+
+    ArrayList<File> fileList = new ArrayList<File>();
     String filedir ;
-    File f1 = new File ( "C:\\Users\\jberr\\Desktop\\WebServer" ) ;
+    File f1 = new File (System.getProperty("user.dir")); 
     
     File[] strFilesDirs = f1.listFiles ( );
     for ( int i = 0 ; i < strFilesDirs.length ; i ++ ) {
-      if ( strFilesDirs[i].isDirectory ( ) ) 
-    System.out.println ( "Directory: " + strFilesDirs[i] ) ;
-      else if ( strFilesDirs[i].isFile ( ) )
-    System.out.println ( "File: " + strFilesDirs[i] + 
-           " (" + strFilesDirs[i].length ( ) + ")" ) ;
+      if ( strFilesDirs[i].isDirectory ( )){
+      }
+      
+      else if ( strFilesDirs[i].isFile ( ) ){
+        fileList.add(strFilesDirs[i]);
+      }
+
     }
+    return fileList;
   }
 }
 
