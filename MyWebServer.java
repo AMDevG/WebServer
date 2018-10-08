@@ -25,7 +25,13 @@ public void run(){
 }
 
 public String createHTML(){
-  String htmlToReturn = "<html>";
+  // String htmlToReturn =   "HTTP/1.1 200 OK" + "\r\n" +
+  // "Content-Length: " + "5000" +
+  // "Connection: CONNECTION" + "\r\n" +
+  // "DATATYPE" + "HTML";
+  String htmlToReturn = "";
+  htmlToReturn = htmlToReturn + "\n" + "<html>";
+
   ReadFiles fileReader = new ReadFiles();
   ArrayList<File> files = fileReader.printDir();
 
